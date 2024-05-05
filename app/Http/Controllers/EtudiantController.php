@@ -14,7 +14,7 @@ class EtudiantController extends Controller
      */
     public function index():View
     {
-        $etudiants = Etudiant::all();
+        $etudiants = Etudiant::paginate(10);
         return view ('etudiants.index', compact('etudiants'));
     }
 

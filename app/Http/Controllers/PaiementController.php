@@ -13,7 +13,7 @@ class PaiementController extends Controller
      */
     public function index()
     {
-        $paiements = Paiement::all();
+        $paiements = Paiement::paginate();
         return view ('paiements.index', compact('paiements'));
     }
 

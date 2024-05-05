@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('content')
                 <div class="card">
                     <div class="card-header">
@@ -28,7 +28,7 @@
                                         <td>{{ $paiement->montant() }}</td>
  
                                         <td>
-                                            <a href="{{ route('paiements.show', $paiement) }}" title="View Student"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i>Voir</button></a>
+                                            <a href="{{ route('paiements.show', $paiement) }}" title="View Student"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"> </i>Voir </button></a>
                                             <a href="{{ route('paiements.edit', $paiement) }}" title="Edit Student"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Modifier</button></a>
                                             <a href="{{ route('paiements.delete', $paiement) }}" title="Delete Student" onclick="return confirm('Confirmer la suppression!')"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i>Supprimer</button></a>
                                             <a href="{{ route('paiements.rapport', $paiement) }}" title="Paiement Rapport"><button class="btn btn-success btn-sm"><i class="fa fa-print" aria-hidden="true"></i>Imprimer</button></a>
@@ -37,6 +37,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{ $paiements->links() }}
                         </div>
  
                     </div>

@@ -10,7 +10,7 @@ class CourController extends Controller
 {
     public function index()
     {
-        $cours = Cour::all();
+        $cours = Cour::paginate(10);
         return view ('cours.index', compact('cours'));
     }
 

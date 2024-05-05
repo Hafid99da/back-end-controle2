@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('content')
                 <div class="card">
                     <div class="card-header">
@@ -30,16 +30,16 @@
                                         <td>{{ $etudiant->telephone }}</td>
  
                                         <td>
-                                            <a href="{{ route('etudiants.show', $etudiant) }}" title="View Student"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ route('etudiants.edit', $etudiant) }}" title="Edit Student"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            <a href="{{ route('etudiants.delete', $etudiant) }}" title="Delete Student" onclick="return confirm('Confirmer la suppression!')"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</button></a>
+                                            <a href="{{ route('etudiants.show', $etudiant) }}" title="View Student"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> Voir </button></a>
+                                            <a href="{{ route('etudiants.edit', $etudiant) }}" title="Edit Student"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier</button></a>
+                                            <a href="{{ route('etudiants.delete', $etudiant) }}" title="Delete Student" onclick="return confirm('Confirmer la suppression!')"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i>Supprimer</button></a>
                                         </td>
                                     </tr>
                                 @endforeach
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
+                        {{ $etudiants->links() }}
                         </div>
- 
                     </div>
                 </div>
 @endsection

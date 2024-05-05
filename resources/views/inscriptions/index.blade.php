@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('content')
                 <div class="card">
                     <div class="card-header">
@@ -10,9 +10,6 @@
                         </a>
                         <a href="{{ route('etudiants.create') }}" class="btn btn-success btn-sm" title="Ajouter Nouveau etudiant">
                             <i class="fa fa-plus" aria-hidden="true"></i> Ajouter Nouveau Etudiant
-                        </a>
-                        <a href="{{ route('enseignants.create') }}" class="btn btn-success btn-sm" title="Ajouter Nouveau enseignant">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Ajouter Nouveau Enseignant
                         </a>
                         <br/>
                         <br/>
@@ -39,14 +36,15 @@
                                         <td>{{ $inscription->montant() }}</td>
  
                                         <td>
-                                            <a href="{{ route('inscriptions.show', $inscription) }}" title="View Student"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ route('inscriptions.edit', $inscription) }}" title="Edit Student"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            <a href="{{ route('inscriptions.delete', $inscription) }}" title="Delete Student" onclick="return confirm('Confirmer la suppression!')"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</button></a>
+                                            <a href="{{ route('inscriptions.show', $inscription) }}" title="View Student"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> Voir </button></a>
+                                            <a href="{{ route('inscriptions.edit', $inscription) }}" title="Edit Student"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Modifier</button></a>
+                                            <a href="{{ route('inscriptions.delete', $inscription) }}" title="Delete Student" onclick="return confirm('Confirmer la suppression!')"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i>Suprimmer</button></a>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{ $inscriptions->links() }}
                         </div>
  
                     </div>

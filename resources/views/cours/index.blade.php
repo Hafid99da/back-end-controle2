@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('content')
                 <div class="card">
                     <div class="card-header">
@@ -30,14 +30,15 @@
                                         <td>{{ $cour->duration() }}</td>
  
                                         <td>
-                                            <a href="{{ route('cours.show', $cour) }}" title="View cour"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ route('cours.edit', $cour) }}" title="Edit cour"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            <a href="{{ route('cours.delete', $cour) }}" title="Delete cour" onclick="return confirm('Confirmer la suppression!')"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</button></a>
+                                            <a href="{{ route('cours.show', $cour) }}" title="View cour"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> Voir </button></a>
+                                            <a href="{{ route('cours.edit', $cour) }}" title="Edit cour"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Modifier</button></a>
+                                            <a href="{{ route('cours.delete', $cour) }}" title="Delete cour" onclick="return confirm('Confirmer la suppression!')"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i>Supprimer</button></a>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{ $cours->links() }}
                         </div>
  
                     </div>

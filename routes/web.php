@@ -19,9 +19,7 @@ use App\Http\Controllers\InscriptionController;
 |
 */
 
-Route::get('/', function () {
-    return view('layout');
-});
+Route::get('/', function () { return view('Accueil.index'); })->name('accueil');
 
 Route::resource('/etudiants',EtudiantController::class);
 Route::get('/etudiants/delete/{etudiant}',[EtudiantController::class,'destroy'])->name('etudiants.delete');

@@ -14,7 +14,7 @@ class InscriptionController extends Controller
      */
     public function index()
     {
-        $inscriptions = Inscription::all();
+        $inscriptions = Inscription::paginate();
         return view ('inscriptions.index', compact('inscriptions'));
     }
 
