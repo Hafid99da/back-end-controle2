@@ -23,6 +23,6 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'user'
         ]);
-        return redirect()->route('login.index')->with(['success' => 'You are registed successfully']);
+        return redirect()->route('accueil.admin')->with(['success' => 'You are registed successfully']);
     }
 }
