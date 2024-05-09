@@ -23,7 +23,7 @@ use App\Http\Controllers\InscriptionController;
 |
 */
 
-Route::get('/', function () { return view('home'); })->name('accueil');
+Route::get('/', function () { return view('home'); })->name('accueil')->middleware('guest');
 
 
 Route::get('/login', [AuthController::class, 'index'])->name('login.index')->middleware('guest');

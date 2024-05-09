@@ -82,6 +82,7 @@ class EtudiantController extends Controller
 
         $etudiant = Etudiant::find($etudiant->id);
 
+        
         if($request->has('image')){
             $file = $request->file('image');
             $extension = $file -> getClientOriginalExtension();
@@ -93,12 +94,17 @@ class EtudiantController extends Controller
             if(File::exists($etudiant->image)){
                 File::delete($etudiant->image);
             }
+            $etudiant->update([
+                'nom' => $request->nom,
+                'adresse' => $request->adresse ,
+                'telephone' => $request->telephone,
+                'image' => $path.$filename
+            ]);
         }
         $etudiant->update([
             'nom' => $request->nom,
             'adresse' => $request->adresse ,
-            'telephone' => $request->telephone,
-            'image' => $path.$filename
+            'telephone' => $request->telephone
         ]);
         return redirect()->route('etudiants.index')->withInput();  
     }

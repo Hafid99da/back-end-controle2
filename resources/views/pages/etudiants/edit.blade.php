@@ -25,7 +25,7 @@
           <div class="text-danger">{{$message}}</div>
         @enderror</br>
         <label>Téléchargez l'image</label></br>
-        <input type="file" name="image" id="image" class="form-control"></br>
+        <input type="file" name="image" id="image" class="form-control" value="{{$etudiant->image}}"></br>
 
         <input type="submit" value="Update" class="btn btn-success"></br>
     </form>
