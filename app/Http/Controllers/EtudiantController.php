@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
+use auth;
 use  App\Models\Etudiant;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\File;
 
 class EtudiantController extends Controller
 {
@@ -15,7 +18,7 @@ class EtudiantController extends Controller
     public function index():View
     {
         $etudiants = Etudiant::paginate(10);
-        return view ('etudiants.index', compact('etudiants'));
+        return view ('pages.etudiants.index', compact('etudiants'));
     }
 
     /**
@@ -23,7 +26,7 @@ class EtudiantController extends Controller
      */
     public function create():View
     {
-        return view('etudiants.create');
+        return view('pages.etudiants.create');
     }
 
     /**
@@ -34,27 +37,32 @@ class EtudiantController extends Controller
         $request->validate([
             'nom' => 'required',
             'adresse' => 'required',
-            'telephone' => 'required'
+            'telephone' => 'required',
+            'image' => 'nullable|mimes:png,jpg,jpeg'
             ]);
-        $input = $request->all();
-        Etudiant::create($input);
+        
+        if($request->has('image')){
+            $file = $request->file('image');
+            $extension = $file -> getClientOriginalExtension();
+            $filename= time() . "." .$extension;
+            $path = "images/etudiants/";
+            $file->move($path, $filename);
+        }
+
+        Etudiant::create([
+            'nom' => $request->nom,
+            'adresse' => $request->adresse ,
+            'telephone' => $request->telephone,
+            'image' => $path.$filename
+        ]);
         return redirect()->route('etudiants.index')->withInput(); 
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Etudiant $etudiant)
-    {
-        return view('etudiants.show', compact('etudiant'));
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Etudiant $etudiant)
     {
-        return view('etudiants.edit', compact('etudiant'));
+        return view('pages.etudiants.edit', compact('etudiant'));
     }
 
     /**
@@ -62,14 +70,36 @@ class EtudiantController extends Controller
      */
     public function update(Request $request, Etudiant $etudiant)
     {
+        if ($request->user()->cannot('update', Etudiant::class)) {
+            abort(403);
+        }
         $request->validate([
             'nom' => 'required',
             'adresse' => 'required',
-            'telephone' => 'required'
+            'telephone' => 'required',
+            'image' => 'nullable|mimes:png,jpg,jpeg'
             ]);
+
         $etudiant = Etudiant::find($etudiant->id);
-        $input = $request->all();
-        $etudiant->update($input);
+
+        if($request->has('image')){
+            $file = $request->file('image');
+            $extension = $file -> getClientOriginalExtension();
+            $filename= time() . "." .$extension;
+
+            $path = "images/etudiants/";
+            $file->move($path, $filename);
+
+            if(File::exists($etudiant->image)){
+                File::delete($etudiant->image);
+            }
+        }
+        $etudiant->update([
+            'nom' => $request->nom,
+            'adresse' => $request->adresse ,
+            'telephone' => $request->telephone,
+            'image' => $path.$filename
+        ]);
         return redirect()->route('etudiants.index')->withInput();  
     }
 
@@ -79,6 +109,9 @@ class EtudiantController extends Controller
     public function destroy(Etudiant $etudiant)
     {
         Etudiant::destroy($etudiant->id);
+        if(File::exists($etudiant->image)){
+            File::delete($etudiant->image);
+        }
         return redirect()->route('etudiants.index');  
     }
 }

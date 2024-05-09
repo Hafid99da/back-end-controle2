@@ -15,7 +15,7 @@ class InscriptionController extends Controller
     public function index()
     {
         $inscriptions = Inscription::paginate();
-        return view ('inscriptions.index', compact('inscriptions'));
+        return view ('pages.inscriptions.index', compact('inscriptions'));
     }
 
     /**
@@ -25,7 +25,7 @@ class InscriptionController extends Controller
     {
         $cours = Cour::pluck("nom", "id");
         $etudiants = Etudiant::pluck("nom", "id");
-        return view('inscriptions.create', compact( 'cours','etudiants'));
+        return view('pages.inscriptions.create', compact( 'cours','etudiants'));
     }
 
     /**
@@ -37,7 +37,7 @@ class InscriptionController extends Controller
             'inscpt_code' => 'required',
             'cour_id' => 'required',
             'etudiant_id' => 'required',
-            'date_inscrit' => 'required',
+            'date_inscrit' => 'required | date',
             'montant' => 'required'
             ]);
 
@@ -45,21 +45,12 @@ class InscriptionController extends Controller
         Inscription::create($input);
         return redirect()->route('inscriptions.index')->withInput(); 
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Inscription $inscription)
-    {
-        return view('inscriptions.show', compact('inscription'));
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Inscription $inscription)
     {
-        return view('inscriptions.edit', compact('inscription'));
+        return view('pages.inscriptions.edit', compact('inscription'));
     }
 
     /**

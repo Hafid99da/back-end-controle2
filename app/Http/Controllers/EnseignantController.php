@@ -15,7 +15,7 @@ class EnseignantController extends Controller
     public function index():View
     {
         $enseignants = Enseignant::paginate();
-        return view ('enseignants.index', compact('enseignants'));
+        return view ('pages.enseignants.index', compact('enseignants'));
     }
 
     /**
@@ -23,7 +23,7 @@ class EnseignantController extends Controller
      */
     public function create():View
     {
-        return view('enseignants.create');
+        return view('pages.enseignants.create');
     }
 
     /**
@@ -31,6 +31,9 @@ class EnseignantController extends Controller
      */
     public function store(Request $request):RedirectResponse
     {
+        if ($request->user()->cannot('update', Enseignant::class)) {
+            abort(403);
+        }
         $request->validate([
             'nom' => 'required',
             'adresse' => 'required',
@@ -40,21 +43,12 @@ class EnseignantController extends Controller
         Enseignant::create($input);
         return redirect()->route('enseignants.index')->withInput(); 
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Enseignant $enseignant)
-    {
-        return view('enseignants.show', compact('enseignant'));
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Enseignant $enseignant)
     {
-        return view('enseignants.edit', compact('enseignant'));
+        return view('pages.enseignants.edit', compact('enseignant'));
     }
 
     /**
@@ -62,6 +56,9 @@ class EnseignantController extends Controller
      */
     public function update(Request $request, Enseignant $enseignant)
     {
+        if ($request->user()->cannot('update', Enseignant::class)) {
+            abort(403);
+        }
         $request->validate([
             'nom' => 'required',
             'adresse' => 'required',

@@ -14,7 +14,7 @@ class PaiementController extends Controller
     public function index()
     {
         $paiements = Paiement::paginate();
-        return view ('paiements.index', compact('paiements'));
+        return view ('pages.paiements.index', compact('paiements'));
     }
 
     /**
@@ -23,7 +23,7 @@ class PaiementController extends Controller
     public function create()
     {
         $inscriptions = Inscription::pluck("inscpt_code", "id");
-        return view('paiements.create', compact('inscriptions'));
+        return view('pages.paiements.create', compact('inscriptions'));
     }
 
     /**
@@ -31,6 +31,9 @@ class PaiementController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->user()->cannot('update', Paiement::class)) {
+            abort(403);
+        }
         $request->validate([
             'inscription_id' => 'required',
             'date_paiement' => 'required',
@@ -41,21 +44,12 @@ class PaiementController extends Controller
         Paiement::create($input);
         return redirect()->route('paiements.index')->withInput(); 
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Paiement $paiement)
-    {
-        return view('paiements.show', compact('paiement'));
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Paiement $paiement)
     {
-        return view('paiements.edit', compact('paiement'));
+        return view('pages.paiements.edit', compact('paiement'));
     }
 
     /**
@@ -63,6 +57,9 @@ class PaiementController extends Controller
      */
     public function update(Request $request, Paiement $paiement)
     {
+        if ($request->user()->cannot('update', Paiement::class)) {
+            abort(403);
+        }
         $request->validate([
             'inscription_id' => 'required',
             'date_paiement' => 'required',

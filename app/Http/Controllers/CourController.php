@@ -11,20 +11,23 @@ class CourController extends Controller
     public function index()
     {
         $cours = Cour::paginate(10);
-        return view ('cours.index', compact('cours'));
+        return view ('pages.cours.index', compact('cours'));
     }
 
     /////////////
 
     public function create()
     {
-        return view('cours.create');
+        return view('pages.cours.create');
     }
 
     //////////////
 
     public function store(Request $request)
     {
+        if ($request->user()->cannot('update', Cour::class)) {
+            abort(403);
+        }
         $request->validate([
             'nom' => 'required',
             'programme' => 'required',
@@ -35,18 +38,16 @@ class CourController extends Controller
         return redirect()->route('cours.index')->withInput(); 
     }
 
-    public function show(Cour $cour)
-    {
-        return view('cours.show', compact('cour'));
-    }
-
     public function edit(Cour $cour)
     {
-        return view('cours.edit', compact('cour'));
+        return view('pages.cours.edit', compact('cour'));
     }
 
     public function update(Request $request, Cour $cour)
     {
+        if ($request->user()->cannot('update', Cour::class)) {
+            abort(403);
+        }
         $request->validate([
             'nom' => 'required',
             'programme' => 'required',

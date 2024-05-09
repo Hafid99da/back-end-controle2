@@ -15,6 +15,7 @@ class Etudiant extends Model
     protected $fillable = [
         "nom",
         "adresse",
-        "telephone"
+        "telephone",
+        "image"
     ];
 }
